@@ -1,7 +1,43 @@
-https://kdakan.github.io/Azure-Architecture-Tutorial/
+[https://kdakan.github.io/Azure-Architecture-Tutorial/](https://kdakan.github.io/Azure-Architecture-Tutorial/)
 
 # AZURE ARCHITECTURE TUTORIAL
 
+## Table of contents
+* [AZURE CLOUD](#azure-cloud)
+* [Cloud terms](#cloud-terms)
+* [IAAS (INFRASTRUCTURE AS A SERVICE)](#iaas-infrastructure-as-a-service)
+* [IAAS Compute services](#iaas-compute-services)
+* [IAAS Storage services](#iaas-storage-services)
+* [IAAS Virtual networking services](#iaas-virtual-networking-services)
+* [PAAS (PLATFORM AS A SERVICE)](#paas-platform-as-a-service)
+* [PAAS Compute services](#paas-compute-services)
+* [PAAS Data services](#paas-data-services)
+* [PAAS Enterprise Integration services](#paas-enterprise-integration-services)
+* [PAAS Content & Media services](#paas-content-media-services)
+* [PAAS Developer services](#paas-developer-services)
+* [PAAS Analytics & IOT services](#paas-analytics-iot-services)
+* [PAAS Security services](#paas-security-services)
+* [HIGH AVAILABILITY & SCALABILITY](#high-availability-and-scalability)
+* [CAP theory](#cap-theory)
+* [Redundancy](#redundancy)
+* [Handling failures](#handling-failures)
+* [Graceful degradation example](#graceful-degradation-example)
+* [Deployment automation](#deployment-automation)
+* [Scalability](#scalability)
+* [Using Azure CDN](#using-azure-cdn)
+* [Data partitioning strategies](#data-partitioning-strategies)
+* [Load performance testing](#load-performance-testing)
+* [Testing in production (Canary release)](#testing-in-production-canary-release)
+* [CONTINUOUS DELIVERY (CI/CD) ON VSTS](#continuous-delivery-ci-cd-on-vsts)
+* [DOCKER CONTAINERS (INTRO)](#docker-containers-intro)
+* [Docker terms](#docker-terms)
+* [Docker CLI commands](#docker-cli-commands)
+* [CLOUD IDENTITY WITH AZURE AD](#cloud-identity-with-azure-ad)
+* [Web app authentication flow](#web-authentication-flow)
+* [Web API authentication using OAuth and Open ID Connect on Azure AD](#web-api-authentication-using-oauth-and-open-id-connect-on-azure-ad)
+* [Web API authentication flow when called from a web app](#web-api-authentication flow-when-called-from-a-web-app)
+
+## AZURE CLOUD
 * Azure cloud offers language agnostic infrastructure services, platform services, security & management
 * Azure data centers are called regions
 * Service names and options on the Azure portal which contain "classic", are usually legacy and not recommended
@@ -9,16 +45,16 @@ https://kdakan.github.io/Azure-Architecture-Tutorial/
 * Resource groups can be handy to replicate a project environment, and Azure subscriptions help in reporting and managing costs
 * We can either use the Azure portal manually, or use the Azure command line interface `az` for automation (we need to type both resource group and resource name to identify a resource)
 
-### Some terms:
+### Cloud terms:
 * Iaas (Infrastructure as a service)
 * Paas (Platform as a service)
 * Aaas (Application as a service)
 * API (Web services)
 
-## INFRASTRUCTURE AS A SERVICE:
+## IAAS (INFRASTRUCTURE AS A SERVICE):
 We need to patch/upgrade the operating system, install, maintain, and upgrade our software
 
-### Compute services: 
+### IAAS Compute services: 
 * Virtual machines (Windows, Linux, Containers, we can also select images with pre-installed software like web servers or databases) 
 * VMs inside the same availability set won't be patched/upgraded/restarted all at the same time and don't share same power supply or network switch)
 * When we create a VM resource, Azure automatically creates other resources like storage account, network interface, network security group (firewall), virtual network, and public IP address all related to this VM
@@ -26,13 +62,13 @@ We need to patch/upgrade the operating system, install, maintain, and upgrade ou
 * We can also login to the VM with user/password, or create an SSH key pair with ssh-keygen on Linux/MacOS, connect using SSH (secure shell), stop and restart the VM
 * When we stop a VM on the Azure portal, we only pay for the storage, note that this corresponds to deallocate command on azure CLI rather than stop command)
 
-### Storage services:
+### IAAS Storage services:
 * BLOB storage (offers hot access, meaning frequent, cool, and archive access tiers, can replicate to another region for disaster recovery, can grant access to specific data/files for a limited time, can host files for transfer to an Azure CDN)
 * Table storage (for key-value pairs)
 * File storage
 * Queue storage (offers basic HTTP interface for using queues)
 
-### Virtual networking services:
+### IAAS Virtual networking services:
 * Virtual network (can limit inbound and outbound traffic and ports using security group, can also divide the virtual network into subnets for security)
 * Load balancer (can be used outside a virtual network, or inside a virtual network as an internal load balancer to route to subnets)
 * DNS
@@ -41,10 +77,10 @@ We need to patch/upgrade the operating system, install, maintain, and upgrade ou
 * VPN gateway (can connect a virtual network with a local resource)
 * Application gateway
 
-## PLATFORM AS A SERVICE:
+## PAAS (PLATFORM AS A SERVICE):
 Easy setup and maintenance, cannot RDP onto the machine, but can do remote debugging with visual studio
 
-### Compute services:
+### PAAS Compute services:
 * App service plan (we choose the number of cores, hard disk capacity, RAM memory, number of slots, backup plan, region, etc. similar to a VM, and we attach one or more app services to this app service plan, allows scale up and scale out)
 * App service (web apps, rest APIs, allows instant deployment without downtime by swapping between slots like test, staging or production)
 * App service (mobile apps, allows users to work offline and later synchronize when online)
@@ -64,35 +100,35 @@ Easy setup and maintenance, cannot RDP onto the machine, but can do remote debug
 * Batch service
 * Cloud services (legacy, do not use, somewhere between app services and virtual machines)
 
-### Data services:
+### PAAS Data services:
 * SQL database (offers SQL databases inside a logical server, different databases inside the same server does not mean they share the same physical machine, can do geo-replication between regions)
 * Redis cache
 * Cosmos DB (key-value pairs, documents or graph data, offers transaction and a MongoDB compatible API, can do geo-replication between regions but the secondary region will be read-only)
 * SQL data warehouse
 * Azure search (can do full-text search on CosmosDB and Azure SQL by crawling data, offers search suggestions, scoring, and supports most languages)
 
-### Enterprise Integration services:
+### PAAS Enterprise Integration services:
 * Service bus (offers basic queues with a single receiver and also pub/sup topics with multiple receivers)
 * Biztalk services
 * Logic apps
 
-### Content & Media services:
+### PAAS Content & Media services:
 * CDN (Content delivery network
 * Media services
 
-### Developer services:
+### PAAS Developer services:
 * VS team services
 * Azure SDK
 * Application Insights
 
-### Analytics & IOT services:
+### PAAS Analytics & IOT services:
 * HDInsight (Hadoop clusters, can do distributed big data analysis with map reduce)
 * Machine learning
 * Data factory (move a large amount of data)
 * Event hubs (can handle millions of events received from IoT devices, can pass them to Stream analytics)
 * Stream analytics
 
-### Security services:
+### PAAS Security services:
 * Portal
 * Azure active directory (we can synchronize local active directory with Azure AD to authenticate internal users)
 * Multi-factor authentication
@@ -185,7 +221,7 @@ Easy setup and maintenance, cannot RDP onto the machine, but can do remote debug
 * We can replicate an environment by grouping all its resources under a resource group
 * Under application insights, we can see detailed information, like slow operations, details for each request, like request times and request dependencies (internal requests to other Azure resources like databases, queues, etc. made under this web request)
 
-### Testing in production:
+### Testing in production (Canary release):
 * Testing in production, under app service/development tools, allows us to do testing in production
 * Here we can set a small percentage of the requests to go to the testing or staging environment (slot), and the rest to the production environment, so that we can test new features live side by side
 * This style of testing is also called a canary release
@@ -254,7 +290,7 @@ If using Visual Studio, the `Dockerfile` for the project is created automaticall
 * Azure AD definition is the same as we did for the web app example
 * Our app is automatically registered with our Azure AD, if we select work or school account and Azure AD in Visual Studio / New project / ASP.NET Core Web Application / API
 
-### Web API authentication called from a web app flow:
+### Web API authentication flow when called from a web app:
 * Our web app acquires a digitally signed JWT bearer token from our Azure AD using a client secret, and keeps it for using further in its requests to our web API
 * When an unauthorized request (request with no JWT bearer token in its header) comes to our web API, the request will be rejected
 * If our ASP.NET Core web API middleware can validate the JWT bearer token, the request is considered authenticated
