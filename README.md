@@ -18,7 +18,7 @@ https://kdakan.github.io/Azure-Architecture-Tutorial/
 ## INFRASTRUCTURE AS A SERVICE:
 We need to patch/upgrade the operating system, install, maintain, and upgrade our software
 
-### Compute: 
+### Compute services: 
 * Virtual machines (Windows, Linux, Containers, we can also select images with pre-installed software like web servers or databases) 
 * VMs inside the same availability set won't be patched/upgraded/restarted all at the same time and don't share same power supply or network switch)
 * When we create a VM resource, Azure automatically creates other resources like storage account, network interface, network security group (firewall), virtual network, and public IP address all related to this VM
@@ -26,13 +26,13 @@ We need to patch/upgrade the operating system, install, maintain, and upgrade ou
 * We can also login to the VM with user/password, or create an SSH key pair with ssh-keygen on Linux/MacOS, connect using SSH (secure shell), stop and restart the VM
 * When we stop a VM on the Azure portal, we only pay for the storage, note that this corresponds to deallocate command on azure CLI rather than stop command)
 
-### Storage:
+### Storage services:
 * BLOB storage (offers hot access, meaning frequent, cool, and archive access tiers, can replicate to another region for disaster recovery, can grant access to specific data/files for a limited time, can host files for transfer to an Azure CDN)
 * Table storage (for key-value pairs)
 * File storage
 * Queue storage (offers basic HTTP interface for using queues)
 
-### Virtual networking:
+### Virtual networking services:
 * Virtual network (can limit inbound and outbound traffic and ports using security group, can also divide the virtual network into subnets for security)
 * Load balancer (can be used outside a virtual network, or inside a virtual network as an internal load balancer to route to subnets)
 * DNS
@@ -44,7 +44,7 @@ We need to patch/upgrade the operating system, install, maintain, and upgrade ou
 ## PLATFORM AS A SERVICE:
 Easy setup and maintenance, cannot RDP onto the machine, but can do remote debugging with visual studio
 
-### Compute:
+### Compute services:
 * App service plan (we choose the number of cores, hard disk capacity, RAM memory, number of slots, backup plan, region, etc. similar to a VM, and we attach one or more app services to this app service plan, allows scale up and scale out)
 * App service (web apps, rest APIs, allows instant deployment without downtime by swapping between slots like test, staging or production)
 * App service (mobile apps, allows users to work offline and later synchronize when online)
@@ -64,19 +64,19 @@ Easy setup and maintenance, cannot RDP onto the machine, but can do remote debug
 * Batch service
 * Cloud services (legacy, do not use, somewhere between app services and virtual machines)
 
-### Data:
+### Data services:
 * SQL database (offers SQL databases inside a logical server, different databases inside the same server does not mean they share the same physical machine, can do geo-replication between regions)
 * Redis cache
 * Cosmos DB (key-value pairs, documents or graph data, offers transaction and a MongoDB compatible API, can do geo-replication between regions but the secondary region will be read-only)
 * SQL data warehouse
 * Azure search (can do full-text search on CosmosDB and Azure SQL by crawling data, offers search suggestions, scoring, and supports most languages)
 
-### Enterprise Integration:
+### Enterprise Integration services:
 * Service bus (offers basic queues with a single receiver and also pub/sup topics with multiple receivers)
 * Biztalk services
 * Logic apps
 
-### Content & Media:
+### Content & Media services:
 * CDN (Content delivery network
 * Media services
 
@@ -85,14 +85,14 @@ Easy setup and maintenance, cannot RDP onto the machine, but can do remote debug
 * Azure SDK
 * Application Insights
 
-### Analytics & IOT:
+### Analytics & IOT services:
 * HDInsight (Hadoop clusters, can do distributed big data analysis with map reduce)
 * Machine learning
 * Data factory (move a large amount of data)
 * Event hubs (can handle millions of events received from IoT devices, can pass them to Stream analytics)
 * Stream analytics
 
-### Security:
+### Security services:
 * Portal
 * Azure active directory (we can synchronize local active directory with Azure AD to authenticate internal users)
 * Multi-factor authentication
@@ -129,8 +129,8 @@ Easy setup and maintenance, cannot RDP onto the machine, but can do remote debug
 * 99.99% availability means 4.32 minutes downtime per month
 * Availability figure of a system equals to all availability figures of its parts multiplied
 
-### Handling failure:
-* Failure is expected all the time in cloud systems commodity harware, so we can use retry logic with exponential time (like 4 sec, 8 sec, 16 sec) in case of connection errors (HTTP 500s and 408)
+### Handling failures:
+* Failure is inevitable and is expectedto happen any time in cloud systems commodity harware, so we can use retry logic with exponential time (like 4 sec, 8 sec, 16 sec) in case of connection errors (HTTP 500s and 408)
 * Retry logic comes default with many Azure services, Azure retry guidance page lists all Azure services different default retry logic settings (how many times, period, etc.)
 * Azure storage, Azure service bus, CosmosDB, and Azure Redis cache implement configurable retry logic in their SDK's, Azure SQL retry logic is implemented in entity framework, but not in ADO.NET
 * Graceful degradation can be used to overcome temporary failures.
