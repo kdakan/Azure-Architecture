@@ -1,3 +1,5 @@
+https://kdakan.github.io/Azure-Architecture-Tutorial/
+
 # AZURE ARCHITECTURE TUTORIAL
 
 * Azure cloud offers language agnostic infrastructure services, platform services, and security & management
