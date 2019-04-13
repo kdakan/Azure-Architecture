@@ -2,14 +2,15 @@ https://kdakan.github.io/Azure-Architecture-Tutorial/
 
 # AZURE ARCHITECTURE TUTORIAL
 
-* Azure cloud offers language agnostic infrastructure services, platform services, and security & management
+* Azure cloud offers language agnostic infrastructure services, platform services, security & management
 * Azure data centers are called regions
 * Service names and options on the Azure portal which contain "classic", are usually legacy and not recommended
-* We create a resource in a region, under a resource group, and with an Azure subscription, resource groups can be handy to replicate a project environment, and Azure subscriptions help in reporting and managing costs
-* We can either use the Azure portal manually, or use the Azure command line interface az for automation (we need to type both resource group and resource name to identify a resource)
+* We create a resource in a region, under a resource group, and with an Azure subscription
+* Resource groups can be handy to replicate a project environment, and Azure subscriptions help in reporting and managing costs
+* We can either use the Azure portal manually, or use the Azure command line interface `az` for automation (we need to type both resource group and resource name to identify a resource)
 
 ### Some terms:
-* Iaas(Infrastructure as a service)
+* Iaas (Infrastructure as a service)
 * Paas (Platform as a service)
 * Aaas (Application as a service)
 * API (Web services)
@@ -49,7 +50,7 @@ Easy setup and maintenance, cannot RDP onto the machine, but can do remote debug
 * App service (mobile apps, allows users to work offline and later synchronize when online)
 * App service (web app for containers or Azure Kubernetes service, allows hosting docker images from docker hub or Azure container registry - a private docker hub, which is created from VSTS build)
 * We can choose to deploy from FTP, Dropbox, OneDrive, VSTS, Github, BitBucket, or local Git repository
-* If we choose a local Git repository, we can upload our source to azure with: git init, git add ., git commit, git add remote azureprod https://(remote repo URL from Azure portal), git push azureprod master, after this, Azure automatically determines the type of the uploaded code and builds the project, runs npm install and npm run to install dependencies and run the project
+* If we choose a local Git repository, we can upload our source to azure with: `git init`, `git add .`, `git commit`, `git add remote azureprod https://(remote repo URL from Azure portal)`, `git push azureprod master`, after this, Azure automatically determines the type of the uploaded code and builds the project, runs npm install and npm run to install dependencies and run the project
 * App service has deployment slots, which allows us to test code before deploying to production, and also revert back to the previous code
 * Each deployment slot has its own different app settings (environment variables), endpoint URLs, and git repository addresses
 * We can also monitor and define alerts (like email or webhook post) for thresholds on selected metrics (like number of requests, errors, CPU usage, memory usage, etc.) in some period (last X minutes, hours, days, etc.) on selected resources
@@ -119,7 +120,7 @@ Easy setup and maintenance, cannot RDP onto the machine, but can do remote debug
 * Storage (has replication enabled by default)
 * Virtual machines (we can use availability set) 
 * App service plan (we can use scale-out options with multiple instances, and also configure auto-scaling here, can even host instances in different regions and use traffic manager for geo-scaling)
-* Function app (serverless azure functions are always available)
+* Function app (serverless Azure functions are always available)
 * Cosmos DB (we can do geo-scaling)
 * Availability SLA's are different for different parts of the system and for different tiers (there is no availability guarantee for free and shared instances)
 * 99% availability means 7.2 hours downtime per month
@@ -146,7 +147,7 @@ Easy setup and maintenance, cannot RDP onto the machine, but can do remote debug
 * Horizontal scaling (scaling out) means adding more devices (nodes or instances) of the same capacity, done automatically and without interruption, so this is the preferred way for scaling
 * We can use app service plan auto-scaling options to scale horizontally or vertically
 * App service plan auto-scaling allows adding or removing instances based on selected metrics or for some time period (busy hours, busy season, etc.) and we can have more than one scaling conditions
-* Function app (serverless azure functions are always scalable)
+* Function app (serverless Azure functions are always scalable)
 * We can use an Azure load balancer, Azure application gateway, or Azure traffic manager for scalability
 * Azure load balancer is layer 4 (TCP/UDP transport layer, works with IP addresses)
 * Azure application gateway is layer 7 (application layer, can use cookie-based sessions, use URLs and HTTP headers for deciding where to route requests, supports web sockets, it also has a firewall to prevent SQL injection and cross-site scripting)
@@ -218,22 +219,23 @@ Easy setup and maintenance, cannot RDP onto the machine, but can do remote debug
 * We can host our private registries using Docker cloud or Azure container registry
 
 ### Docker CLI commands:
-* docker build (builds an image from source files)
-* docker push (uploads an image to docker hub)
-* docker pull (downloads an image from docker hub)
-* docker images (lists images)
-* docker run (creates a new container and runs the image)
-* docker stop (stops a running image without removing its container)
-* docker rm (removes a container but keeps its image)
-* docker rmi (removes an image)
-* docker ps (lists currently running images)
-* docker ps -a (lists currently running and stopped images)
+* `docker build` (builds an image from source files)
+* `docker push` (uploads an image to docker hub)
+* `docker pull` (downloads an image from docker hub)
+* `docker images` (lists images)
+* `docker run` (creates a new container and runs the image)
+* `docker stop` (stops a running image without removing its container)
+* `docker rm` (removes a container but keeps its image)
+* `docker rmi` (removes an image)
+* `docker ps` (lists currently running images)
+* `docker ps -a` (lists currently running and stopped images)
 
 
-* We need to create a file named Dockerfile with information to dockerize our source (prepare our source for docker build)
-* If using Visual Studio, the Dockerfile for the project is created automatically, so we don't need to
+We need to create a file named `Dockerfile` with information to dockerize our source (prepare our source for docker build)
 
-## CLOUD IDENTITY:
+If using Visual Studio, the `Dockerfile` for the project is created automatically, so we don't need to
+
+## CLOUD IDENTITY WITH AZURE AD:
 * Web app authentication using OAuth and Open ID Connect on Azure AD:
 * We create an Azure active directory on the Azure portal, here we give it a directory name and subdomain (which forms part of the domain URL)
 * We switch to the Azure active directory we have created, from the top right directories menu or the top right dropdown menu under the Azure account icon and email
