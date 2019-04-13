@@ -6,19 +6,19 @@
 * [ 1. AZURE CLOUD](#1-azure-cloud)
 * [ 1.1. Cloud terms](#11-cloud-terms)
 * [ 2. IAAS (INFRASTRUCTURE AS A SERVICE)](#2-iaas-infrastructure-as-a-service)
-* [ 2.1. IAAS Compute services](#21-iaas-compute-services)
-* [ 2.2. IAAS Storage services](#22-iaas-storage-services)
-* [ 2.3. IAAS Virtual networking services](#23-iaas-virtual-networking-services)
+* [ 2.1. Iaas Compute services](#21-iaas-compute-services)
+* [ 2.2. Iaas Storage services](#22-iaas-storage-services)
+* [ 2.3. Iaas Virtual networking services](#23-iaas-virtual-networking-services)
 * [ 3. PAAS (PLATFORM AS A SERVICE)](#3-paas-platform-as-a-service)
-* [ 3.1. PAAS Compute services](#31-paas-compute-services)
-* [ 3.2. PAAS Data services](#32-paas-data-services)
-* [ 3.3. PAAS Enterprise Integration services](#33-paas-enterprise-integration-services)
-* [ 3.4. PAAS Content & Media services](#34-paas-content--media-services)
-* [ 3.5. PAAS Developer services](#35-paas-developer-services)
-* [ 3.6. PAAS Analytics & IOT services](36-#paas-analytics--iot-services)
-* [ 3.7. PAAS Security services](#37-paas-security-services)
+* [ 3.1. Paas Compute services](#31-paas-compute-services)
+* [ 3.2. Paas Data services](#32-paas-data-services)
+* [ 3.3. Paas Enterprise Integration services](#33-paas-enterprise-integration-services)
+* [ 3.4. Paas Content & Media services](#34-paas-content--media-services)
+* [ 3.5. Paas Developer services](#35-paas-developer-services)
+* [ 3.6. Paas Analytics & IOT services](36-#paas-analytics--iot-services)
+* [ 3.7. Paas Security services](#37-paas-security-services)
 * [ 4. HIGH AVAILABILITY & SCALABILITY](#4-high-availability--scalability)
-* [ 4.1. CAP theory](#41-cap-theory)
+* [ 4.1. CAP theorem](#41-cap-theorem)
 * [ 4.2. Redundancy](#42-redundancy)
 * [ 4.3. Handling failures](43-#handling-failures)
 * [ 4.3.1. Graceful degradation example](#431-graceful-degradation-example)
@@ -54,7 +54,7 @@
 ## 2. IAAS (INFRASTRUCTURE AS A SERVICE):
 We need to patch/upgrade the operating system, install, maintain, and upgrade our software
 
-### 2.1. IAAS Compute services: 
+### 2.1. Iaas Compute services: 
 * Virtual machines (Windows, Linux, Containers, we can also select images with pre-installed software like web servers or databases) 
 * VMs inside the same availability set won't be patched/upgraded/restarted all at the same time and don't share same power supply or network switch)
 * When we create a VM resource, Azure automatically creates other resources like storage account, network interface, network security group (firewall), virtual network, and public IP address all related to this VM
@@ -62,13 +62,13 @@ We need to patch/upgrade the operating system, install, maintain, and upgrade ou
 * We can also login to the VM with user/password, or create an SSH key pair with ssh-keygen on Linux/MacOS, connect using SSH (secure shell), stop and restart the VM
 * When we stop a VM on the Azure portal, we only pay for the storage, note that this corresponds to deallocate command on azure CLI rather than stop command)
 
-### 2.2. IAAS Storage services:
+### 2.2. Iaas Storage services:
 * BLOB storage (offers hot access, meaning frequent, cool, and archive access tiers, can replicate to another region for disaster recovery, can grant access to specific data/files for a limited time, can host files for transfer to an Azure CDN)
 * Table storage (for key-value pairs)
 * File storage
 * Queue storage (offers basic HTTP interface for using queues)
 
-### 2.3. IAAS Virtual networking services:
+### 2.3. Iaas Virtual networking services:
 * Virtual network (can limit inbound and outbound traffic and ports using security group, can also divide the virtual network into subnets for security)
 * Load balancer (can be used outside a virtual network, or inside a virtual network as an internal load balancer to route to subnets)
 * DNS
@@ -80,7 +80,7 @@ We need to patch/upgrade the operating system, install, maintain, and upgrade ou
 ## 3. PAAS (PLATFORM AS A SERVICE):
 Easy setup and maintenance, cannot RDP onto the machine, but can do remote debugging with visual studio
 
-### 3.1. PAAS Compute services:
+### 3.1. Paas Compute services:
 * App service plan (we choose the number of cores, hard disk capacity, RAM memory, number of slots, backup plan, region, etc. similar to a VM, and we attach one or more app services to this app service plan, allows scale up and scale out)
 * App service (web apps, rest APIs, allows instant deployment without downtime by swapping between slots like test, staging or production)
 * App service (mobile apps, allows users to work offline and later synchronize when online)
@@ -100,35 +100,35 @@ Easy setup and maintenance, cannot RDP onto the machine, but can do remote debug
 * Batch service
 * Cloud services (legacy, do not use, somewhere between app services and virtual machines)
 
-### 3.2. PAAS Data services:
+### 3.2. Paas Data services:
 * SQL database (offers SQL databases inside a logical server, different databases inside the same server does not mean they share the same physical machine, can do geo-replication between regions)
 * Redis cache
 * Cosmos DB (key-value pairs, documents or graph data, offers transaction and a MongoDB compatible API, can do geo-replication between regions but the secondary region will be read-only)
 * SQL data warehouse
 * Azure search (can do full-text search on CosmosDB and Azure SQL by crawling data, offers search suggestions, scoring, and supports most languages)
 
-### 3.3. PAAS Enterprise Integration services:
+### 3.3. Paas Enterprise Integration services:
 * Service bus (offers basic queues with a single receiver and also pub/sup topics with multiple receivers)
 * Biztalk services
 * Logic apps
 
-### 3.4. PAAS Content & Media services:
+### 3.4. Paas Content & Media services:
 * CDN (Content delivery network
 * Media services
 
-### 3.5. PAAS Developer services:
+### 3.5. Paas Developer services:
 * VS team services
 * Azure SDK
 * Application Insights
 
-### 3.6. PAAS Analytics & IOT services:
+### 3.6. Paas Analytics & IOT services:
 * HDInsight (Hadoop clusters, can do distributed big data analysis with map reduce)
 * Machine learning
 * Data factory (move a large amount of data)
 * Event hubs (can handle millions of events received from IoT devices, can pass them to Stream analytics)
 * Stream analytics
 
-### 3.7. PAAS Security services:
+### 3.7. Paas Security services:
 * Portal
 * Azure active directory (we can synchronize local active directory with Azure AD to authenticate internal users)
 * Multi-factor authentication
@@ -138,7 +138,7 @@ Easy setup and maintenance, cannot RDP onto the machine, but can do remote debug
 * Azure AD B2C (we can also use asp.net identity framework, or identity server with ASP.NET applications)
 
 ## 4. HIGH AVAILABILITY & SCALABILITY:
-### 4.1. CAP theory:
+### 4.1. CAP theorem:
 * CAP = Consistency, Availability, (network) Partition tolerance
 * Consistency means that we always read what is most recently written, unlike in eventually consistent systems where we may sometimes read stale (old) data
 * Availability means every request gets a non-error response, unlike in highly available systems we have 9x.xx % SLA's and we should handle connection errors by repeat logic
